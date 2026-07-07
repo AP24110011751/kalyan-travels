@@ -136,9 +136,7 @@ export default function Home() {
     return Array.from(cities).map((city) => ({ value: city, label: city }));
   }, [flight, hotel]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  
   const handlesearch = () => {
     if (bookingtype === "flights") {
       const results = flight.filter(
