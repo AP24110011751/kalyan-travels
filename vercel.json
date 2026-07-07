@@ -1,4 +1,5 @@
 {
+  "installCommand": "cd makemytour && npm install",
   "buildCommand": "cd makemytour && npm run build",
   "outputDirectory": "makemytour/.next",
   "framework": "nextjs"
