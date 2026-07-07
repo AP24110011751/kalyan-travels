@@ -1,0 +1,24 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Node / Next.js
+makemytour/node_modules/
+makemytour/.next/
+makemytour/out/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
