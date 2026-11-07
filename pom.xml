@@ -11,8 +11,8 @@
 	<groupId>com.makemytrip</groupId>
 	<artifactId>makemytrip</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>makemytrip</name>
-	<description>fullstack with springboot </description>
+	<name>kalyan-travels</name>
+	<description>Kalyan Travels Backend - Full-stack travel booking API</description>
 	<url/>
 	<licenses>
 		<license/>

@@ -1,40 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# ✈️ Kalyan Travels
 
-## Getting Started
+A modern, full-stack travel booking platform for discovering, booking, and managing flights and hotels worldwide.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16.2.10-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19.0.0-blue?logo=react)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4.1-38B2AC?logo=tailwind-css)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.1-6DB33F?logo=springboot)
+![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb)
+
+---
+
+## 🌟 Key Features
+
+- 🛫 **Flight Search & Booking**: Search domestic and international flights with real-time seat selection, interactive cabin seat map, and dynamic pricing.
+- 🏨 **Hotel Reservations**: Discover luxury resorts and hotels with room tier selection (Standard, Deluxe, Executive Suite), amenity breakdown, and guest reviews.
+- 💳 **Interactive Payment Gateway**: Multi-payment dialog supporting:
+  - **Credit / Debit Cards** (Card number formatting, expiry, CVV validation)
+  - **UPI** (VPA address with quick handles `@okhdfcbank`, `@oksbi`, `@okaxis`, `@ybl`)
+  - **Net Banking** (Major Indian banks, account number & IFSC input)
+- 🔄 **Real-Time Refund Tracker**: Visual 3-stage cancellation workflow (*Refund Initiated* → *Processing* → *Completed*) with dynamic timeline updates.
+- 👤 **User Profiles & History**: Complete booking history, cancellation management, and account preferences with instant local and cloud sync.
+- ⚡ **High Performance**: 0ms instant initial rendering, parallel backend hydration, and client-side failover support.
+
+---
+
+## 🏗️ Architecture & Tech Stack
+
+### Frontend
+- **Framework**: Next.js (Pages Router) + React 19
+- **State Management**: Redux Toolkit + LocalStorage persistence
+- **Styling**: Tailwind CSS + Radix UI Primitives + Lucide Icons
+- **Deployment**: [Vercel](https://vercel.com)
+
+### Backend
+- **Framework**: Spring Boot 3.4.1 (Java 17)
+- **Database**: MongoDB Atlas
+- **Security**: Spring Security & CORS configuration
+- **Containerization**: Multi-stage Docker build
+- **Deployment**: [Render](https://render.com)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ & npm
+- Java JDK 17+
+- Maven 3.9+
+
+### Frontend Setup
 
 ```bash
+cd makemytour
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The frontend will run on [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Backend Setup
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+# In repository root
+./mvnw spring-boot:run
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+The backend server will run on [http://localhost:8080](http://localhost:8080).
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🌐 Deployment Configuration
 
-To learn more about Next.js, take a look at the following resources:
+### Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+#### Frontend (Vercel)
+- `NEXT_PUBLIC_BACKEND_URL`: URL of your live backend (e.g. `https://kalyan-travels-backend.onrender.com`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### Backend (Render / Docker)
+- `PORT`: Automatically assigned by Render (defaults to `8080`)
+- `spring.data.mongodb.uri`: MongoDB Atlas connection string
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## 📄 License
+MIT License. Built with ❤️ for travelers by Kalyan.
