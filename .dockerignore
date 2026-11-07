@@ -1,0 +1,6 @@
+makemytour/
+target/
+.git/
+.gitignore
+*.md
+
