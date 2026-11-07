@@ -27,7 +27,7 @@ export default function App(props: AppProps) {
   return (
     <Provider store={store}>
       <Head>
-        <title>MakeMyTour</title>
+        <title>Kalyan Travels - Book Flights & Hotels Online</title>
       </Head>
       <Myapp {...props} />
     </Provider>

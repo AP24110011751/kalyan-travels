@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   User,
   Phone,
@@ -21,23 +20,7 @@ import { clearUser, setUser } from "@/store";
 import CancellationModal from "@/components/CancellationModal";
 import RefundTracker from "@/components/RefundTracker";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8080";
-
-const editprofile = async (
-  id: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-  phoneNumber: string
-) => {
-  const res = await axios.post(`${BACKEND_URL}/user/edit?id=${id}`, {
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-  });
-  return res.data;
-};
+import { editprofile } from "@/api";
 
 interface RefundEntry {
   bookingId: string;
@@ -82,7 +65,6 @@ const ProfilePage = () => {
     email: user?.email || "",
     phoneNumber: user?.phoneNumber || "",
   });
-  const [editForm] = useState({ ...userData });
 
   // ✅ Fix: start with empty arrays, load from localStorage in useEffect
   const [cancelledIds, setCancelledIds] = useState<string[]>([]);

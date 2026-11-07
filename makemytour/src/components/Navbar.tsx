@@ -13,7 +13,7 @@ import {
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { clearUser } from "@/store";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.user);
@@ -24,9 +24,12 @@ const Navbar = () => {
   return (
     <header className=" backdrop-blur-md py-4 sticky top-0 z-50">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center space-x-2 text-white">
+        <div
+          className="flex items-center space-x-2 text-white cursor-pointer select-none"
+          onClick={() => router.push("/")}
+        >
           <Plane className="w-8 h-8 text-red-500" />
-          <span className="text-2xl font-bold text-black">MakeMyTour</span>
+          <span className="text-2xl font-bold text-black tracking-tight">Kalyan Travels</span>
         </div>
         <div className="flex items-center space-x-4">
           {/* ✅ Live Flight Status Link */}

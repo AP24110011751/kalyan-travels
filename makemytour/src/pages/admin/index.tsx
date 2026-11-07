@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,14 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 import { Textarea } from "@/components/ui/textarea";
 import FlightList from "@/components/Flights/Flightlist";
@@ -33,65 +24,6 @@ import {
 } from "@/api";
 import HotelList from "@/components/Hotel/Hotel";
 import ReviewModeration from "@/components/ReviewModeration";
-const mockFlights = [
-  {
-    _id: "1",
-    flightName: "AirOne 101",
-    from: "New York",
-    to: "London",
-    departureTime: "2023-07-01T08:00",
-    arrivalTime: "2023-07-01T20:00",
-    price: 500,
-    availableSeats: 150,
-  },
-  {
-    _id: "2",
-    flightName: "SkyHigh 202",
-    from: "Paris",
-    to: "Tokyo",
-    departureTime: "2023-07-02T10:00",
-    arrivalTime: "2023-07-03T06:00",
-    price: 800,
-    availableSeats: 200,
-  },
-  {
-    _id: "3",
-    flightName: "EagleWings 303",
-    from: "Los Angeles",
-    to: "Sydney",
-    departureTime: "2023-07-03T22:00",
-    arrivalTime: "2023-07-05T06:00",
-    price: 1200,
-    availableSeats: 180,
-  },
-];
-
-const mockHotels = [
-  {
-    _id: "1",
-    hotelName: "Luxury Palace",
-    location: "Paris, France",
-    pricePerNight: 300,
-    availableRooms: 50,
-    amenities: "Wi-Fi, Pool, Spa, Restaurant",
-  },
-  {
-    _id: "2",
-    hotelName: "Seaside Resort",
-    location: "Bali, Indonesia",
-    pricePerNight: 200,
-    availableRooms: 100,
-    amenities: "Beach Access, Wi-Fi, Restaurant, Water Sports",
-  },
-  {
-    _id: "3",
-    hotelName: "Mountain Lodge",
-    location: "Aspen, Colorado",
-    pricePerNight: 250,
-    availableRooms: 30,
-    amenities: "Ski-in/Ski-out, Fireplace, Hot Tub, Restaurant",
-  },
-];
 interface User {
   _id: string;
   firstName: string;

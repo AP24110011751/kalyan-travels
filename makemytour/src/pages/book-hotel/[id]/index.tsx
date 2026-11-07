@@ -42,6 +42,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SignupDialog from "@/components/SignupDialog";
 import Loader from "@/components/Loader";
 import { setUser } from "@/store";
+import PaymentModal from "@/components/PaymentModal";
 const BookHotelPage = () => {
   const [quantity, setQuantity] = useState(1);
   const router = useRouter();
@@ -50,6 +51,7 @@ const BookHotelPage = () => {
   const [loading, setLoading] = useState(true);
   const user = useSelector((state: any) => state.user.user);
   const [open, setOpen] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const dispatch = useDispatch();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showAmenities, setShowAmenities] = useState(false);
@@ -62,7 +64,7 @@ const BookHotelPage = () => {
     const fetchhotels = async () => {
       try {
         const data = await gethotel();
-        const filteredData = data.filter((hotel: any) => hotel.id === id);
+        const filteredData = data.filter((hotel: any) => (hotel.id === id || hotel._id === id));
         sethotels(filteredData);
         // ✅ Personalized Recommendations — Task 6: log this view for the affinity profile
         if (filteredData[0]?.location) {
@@ -85,13 +87,13 @@ const BookHotelPage = () => {
   }
   const hotel = hotels[0];
   const hotelData = {
-    name: "Magnum Resorts- Near Candolim Beach",
+    name: hotel?.hotelName || "Hotel",
     rating: 3,
     maxRating: 5,
     propertyPhotos: 91,
     guestPhotos: 386,
     description:
-      "One of the best hotels in North Goa, operating since 2001 catering to international and domestic individual and group travelers.",
+      `${hotel?.hotelName || "This hotel"} is located in ${hotel?.location || "a prime location"}, offering world-class amenities and exceptional hospitality for all travelers.`,
     amenities: [
       { icon: <Pool className="w-5 h-5" />, name: "Swimming Pool" },
       { icon: <UtensilsCrossed className="w-5 h-5" />, name: "Restaurant" },
@@ -135,8 +137,8 @@ const BookHotelPage = () => {
   const totalDiscounts = hotelData?.room.discountedPrice * quantity;
   const roomUpgradeCost = roomExtraCostPerRoom * quantity;
   const grandTotal = totalPrice + totalTaxes - totalDiscounts + roomUpgradeCost;
-  const handlebooking = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handlebooking = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     try {
       const data = await handlehotelbooking(
         user?.id,
@@ -164,7 +166,7 @@ const BookHotelPage = () => {
       }
       const updateuser = {
         ...user,
-        bookings: [...user.bookings, data],
+        bookings: [...(user?.bookings || []), data],
       };
       dispatch(setUser(updateuser));
       setOpen(false);
@@ -282,7 +284,15 @@ const BookHotelPage = () => {
           </div>
         </div>
       </div>
-      <Button className="w-full mt-4" onClick={handlebooking}>Proceed to Payment</Button>
+      <Button
+        className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+        onClick={() => {
+          setOpen(false);
+          setShowPaymentModal(true);
+        }}
+      >
+        Proceed to Payment
+      </Button>
     </DialogContent>
   );
   return (
@@ -662,6 +672,14 @@ const BookHotelPage = () => {
           </div>
         </div>
       </div>
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        amount={grandTotal}
+        itemTitle={hotel?.hotelName || "Hotel Booking"}
+        itemSubtitle={`${quantity} Room${quantity > 1 ? "s" : ""} • ${hotel?.location}`}
+        onPaymentSuccess={handlebooking}
+      />
     </div>
   );
 };

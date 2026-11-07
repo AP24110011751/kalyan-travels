@@ -139,7 +139,7 @@ const ReviewModeration = () => {
                   className="flex items-center gap-1 text-xs bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg transition-colors"
                 >
                   <Undo2 className="w-3.5 h-3.5" />
-                  Approve &amp; Unflag
+                  {"Approve & Unflag"}
                 </button>
                 <button
                   onClick={() => handleRemove(entityKey, review.id)}

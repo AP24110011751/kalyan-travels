@@ -114,6 +114,7 @@ export default function Home() {
         sethotel(data);
         const flightdata = await getflight();
         setflight(flightdata);
+        setsearchresult(flightdata);
       } catch (error) {
         console.error(error);
       } finally {
@@ -185,13 +186,19 @@ export default function Home() {
               icon={<Plane />}
               text="Flights"
               active={bookingtype === "flights"}
-              onClick={() => setbookingtype("flights")}
+              onClick={() => {
+                setbookingtype("flights");
+                setsearchresult(flight);
+              }}
             />
             <NavItem
               icon={<Hotel />}
               text="Hotels"
               active={bookingtype === "hotels"}
-              onClick={() => setbookingtype("hotels")}
+              onClick={() => {
+                setbookingtype("hotels");
+                setsearchresult(hotel);
+              }}
             />
             <NavItem icon={<HomeIcon />} text="Homestays" />
             <NavItem icon={<Umbrella />} text="Holiday" />
@@ -264,14 +271,14 @@ export default function Home() {
             </Button>
           </div>
           <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-4 text-white">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">
               Search Results
             </h2>
             {searchresults.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {searchresults.map((result) => (
+                {searchresults.map((result, index) => (
                   <div
-                    key={result.id}
+                    key={result.id || result._id || index}
                     className="bg-white rounded-lg shadow p-4 border border-gray-200"
                   >
                     {bookingtype === "flights" ? (
@@ -293,7 +300,7 @@ export default function Home() {
                         </p>
                         <Button
                           className="w-full mt-4"
-                          onClick={() => handlebooknow(result.id)}
+                          onClick={() => handlebooknow(result.id || result._id)}
                         >
                           Book Now
                         </Button>
@@ -309,7 +316,7 @@ export default function Home() {
                         </p>
                         <Button
                           className="w-full mt-4"
-                          onClick={() => handlebooknow(result.id)}
+                          onClick={() => handlebooknow(result.id || result._id)}
                         >
                           Book Now
                         </Button>

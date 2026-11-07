@@ -4,35 +4,35 @@ const Footer = () => {
   return (
     <footer className="bg-black text-gray-300 pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Why MakeMyTour Section */}
+        {/* Why Kalyan Travels Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div>
-            <h3 className="text-xl font-bold mb-4">Why MakeMyTour?</h3>
+            <h3 className="text-xl font-bold mb-4">Why Kalyan Travels?</h3>
             <p className="text-sm leading-relaxed">
-              Established in 2000, MakeMyTour has since positioned itself as one
-              of the leading companies, providing great offers, competitive
-              airfares, exclusive discounts, and a seamless online booking
-              experience.
+              Established with a passion for world-class tourism, Kalyan Travels
+              has since positioned itself as a leading travel partner, providing great
+              offers, competitive airfares, exclusive discounts, and a seamless
+              online booking experience.
             </p>
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">
-              Booking Flights with MakeMyTour
+              Booking Flights with Kalyan Travels
             </h3>
             <p className="text-sm leading-relaxed">
-              Book your flights tickets with India's leading flight booking
-              company. Get best deals on flights, train tickets, buses, hotels
-              and holiday packages.
+              Book your flight tickets with India's trusted travel booking
+              platform. Get the best deals on domestic & international flights,
+              premium hotels, and curated holiday packages.
             </p>
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">
-              Domestic Flights with MakeMyTour
+              Domestic Flights with Kalyan Travels
             </h3>
             <p className="text-sm leading-relaxed">
-              MakeMyTour is India's leading player for flight bookings. With the
-              cheapest fare guarantee, experience great value at the lowest
-              price.
+              Kalyan Travels is your go-to partner for effortless flight bookings.
+              With lowest fare guarantees and real-time updates, experience great
+              value on every trip.
             </p>
           </div>
         </div>
@@ -139,7 +139,7 @@ const Footer = () => {
               </a>
             </div>
             <p className="text-sm">
-              © 2024 MakeMyTour PVT. LTD. All rights reserved
+              © {new Date().getFullYear()} Kalyan Travels PVT. LTD. All rights reserved
             </p>
           </div>
         </div>

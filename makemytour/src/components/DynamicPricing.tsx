@@ -253,7 +253,7 @@ const DynamicPricing = ({
             className="flex items-center gap-1.5 text-sm bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium transition-colors"
           >
             <Clock className="w-4 h-4" />
-            Unfreeze &amp; use live price
+            {"Unfreeze & use live price"}
           </button>
         )}
       </div>

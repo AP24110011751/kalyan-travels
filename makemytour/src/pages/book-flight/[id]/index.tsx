@@ -45,6 +45,7 @@ import { Users, Ticket } from "lucide-react";
 import SignupDialog from "@/components/SignupDialog";
 import Loader from "@/components/Loader";
 import { setUser } from "@/store";
+import PaymentModal from "@/components/PaymentModal";
 const BookFlightPage = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -52,6 +53,7 @@ const BookFlightPage = () => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [seatExtraCost, setSeatExtraCost] = useState(0);
   const [dynamicPrice, setDynamicPrice] = useState<number | null>(null);
@@ -61,7 +63,7 @@ const BookFlightPage = () => {
     const fetchFlights = async () => {
       try {
         const data = await getflight();
-        const filteredData = data.filter((flight: any) => flight.id === id);
+        const filteredData = data.filter((flight: any) => (flight.id === id || flight._id === id));
         setFlights(filteredData);
         console.log(filteredData);
         // ✅ Personalized Recommendations — Task 6: log this view for the affinity profile
@@ -85,17 +87,19 @@ const BookFlightPage = () => {
   }
   const flight = flights[0];
   const flightDetails = {
-    from: "Bengaluru",
-    to: "New Delhi",
-    date: "Thursday, Jan 16",
-    flightNo: "IX 2747",
+    from: flight?.from || "N/A",
+    to: flight?.to || "N/A",
+    date: flight?.departureTime ? new Date(flight.departureTime).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }) : "N/A",
+    flightNo: `${flight?.flightName?.substring(0, 2).toUpperCase() || "XX"} ${Math.floor(1000 + Math.random() * 9000)}`,
     aircraft: "Airbus A320",
-    airline: "Air India Express",
-    departureTime: "17:55",
-    arrivalTime: "20:55",
-    duration: "3h 0m",
-    departureTerminal: "Bengaluru International Airport, Terminal T2",
-    arrivalTerminal: "Indira Gandhi International Airport, Terminal T3",
+    airline: flight?.flightName || "Unknown Airline",
+    departureTime: flight?.departureTime || "",
+    arrivalTime: flight?.arrivalTime || "",
+    duration: flight?.departureTime && flight?.arrivalTime
+      ? (() => { const diff = Math.abs(new Date(flight.arrivalTime).getTime() - new Date(flight.departureTime).getTime()); const h = Math.floor(diff / 3600000); const m = Math.floor((diff % 3600000) / 60000); return `${h}h ${m}m`; })()
+      : "N/A",
+    departureTerminal: `${flight?.from || "N/A"} International Airport, Terminal T2`,
+    arrivalTerminal: `${flight?.to || "N/A"} International Airport, Terminal T3`,
     cabinBaggage: "7 Kgs / Adult",
     checkInBaggage: "15 Kgs (1 piece only) / Adult",
   };
@@ -175,12 +179,12 @@ const BookFlightPage = () => {
   const totalOtherServices = fareSummary?.otherServices * quantity;
   const totalDiscounts = fareSummary?.discounts * quantity;
   const grandTotal =
-    totalPrice + totalTaxes + totalOtherServices - totalDiscounts + seatExtraCost;
+    totalPrice + totalTaxes + totalOtherServices + totalDiscounts + seatExtraCost;
 
   const seatsComplete = selectedSeats.length === quantity;
 
-  const handlebooking = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handlebooking = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!seatsComplete) return;
     try {
       const data = await handleflightbooking(
@@ -209,7 +213,7 @@ const BookFlightPage = () => {
       }
       const updateuser = {
         ...user,
-        bookings: [...user.bookings, data],
+        bookings: [...(user?.bookings || []), data],
       };
       dispatch(setUser(updateuser));
       setOpen(false);
@@ -332,8 +336,11 @@ const BookFlightPage = () => {
         </div>
       </div>
       <Button
-        className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
-        onClick={handlebooking}
+        className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+        onClick={() => {
+          setOpen(false);
+          setShowPaymentModal(true);
+        }}
         disabled={!seatsComplete}
       >
         Proceed to Payment
@@ -633,6 +640,14 @@ const BookFlightPage = () => {
           </div>
         </div>
       </div>
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        amount={grandTotal}
+        itemTitle={flight?.flightName || "Flight Booking"}
+        itemSubtitle={`${quantity} Ticket${quantity > 1 ? "s" : ""} • ${flight?.from} → ${flight?.to}`}
+        onPaymentSuccess={handlebooking}
+      />
     </div>
   );
 };

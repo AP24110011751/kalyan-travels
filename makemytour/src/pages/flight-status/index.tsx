@@ -190,7 +190,7 @@ const FlightStatusPage = () => {
             const msg = `${newF.flightNo}: Status changed to ${newF.status}`;
             setNotifications((n) => [msg, ...n].slice(0, 5));
             if (notifEnabled && "Notification" in window && Notification.permission === "granted") {
-              new Notification(`MakeMyTour Flight Update`, { body: msg });
+              new Notification(`Kalyan Travels Flight Update`, { body: msg });
             }
           }
         });

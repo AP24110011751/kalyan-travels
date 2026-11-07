@@ -41,7 +41,9 @@ const stepColorClass = (
 ): string => {
   const stepIndex = STATUS_STEPS.indexOf(stepStatus);
   const currentIndex = STATUS_STEPS.indexOf(currentStatus);
-  if (stepIndex < currentIndex) return "text-green-600";
+  if (stepIndex < currentIndex || (stepIndex === currentIndex && currentStatus === "completed")) {
+    return "text-green-600";
+  }
   if (stepIndex === currentIndex) return "text-blue-600";
   return "text-gray-300";
 };
@@ -56,7 +58,7 @@ const StepIcon = ({
   const stepIndex = STATUS_STEPS.indexOf(stepStatus);
   const currentIndex = STATUS_STEPS.indexOf(currentStatus);
 
-  if (stepIndex < currentIndex) {
+  if (stepIndex < currentIndex || (stepIndex === currentIndex && currentStatus === "completed")) {
     return <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />;
   }
   if (stepIndex === currentIndex) {
@@ -132,10 +134,11 @@ const RefundTracker = ({ refunds }: RefundTrackerProps) => {
                       />
                       {!isLast && (
                         <div
-                          className={`w-0.5 flex-1 my-1 min-h-[20px] ${stepIndex < currentIndex
-                              ? "bg-green-300"
+                          className={`w-0.5 flex-1 my-1 min-h-[20px] ${
+                            stepIndex < currentIndex || refund.status === "completed"
+                              ? "bg-green-400"
                               : "bg-gray-200"
-                            }`}
+                          }`}
                         />
                       )}
                     </div>
