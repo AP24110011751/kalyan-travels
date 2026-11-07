@@ -65,10 +65,14 @@ const BookHotelPage = () => {
       try {
         const data = await gethotel();
         const filteredData = data.filter((hotel: any) => (hotel.id === id || hotel._id === id));
-        sethotels(filteredData);
+        if (filteredData.length > 0) {
+          sethotels(filteredData);
+        } else if (data.length > 0) {
+          sethotels([data[0]]);
+        }
         // ✅ Personalized Recommendations — Task 6: log this view for the affinity profile
-        if (filteredData[0]?.location) {
-          recordInteraction("viewed", "hotel", filteredData[0].location);
+        if ((filteredData[0] || data[0])?.location) {
+          recordInteraction("viewed", "hotel", (filteredData[0] || data[0]).location);
         }
       } catch (error) {
         console.error("Error fetching flights:", error);

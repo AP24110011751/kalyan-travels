@@ -64,11 +64,14 @@ const BookFlightPage = () => {
       try {
         const data = await getflight();
         const filteredData = data.filter((flight: any) => (flight.id === id || flight._id === id));
-        setFlights(filteredData);
-        console.log(filteredData);
+        if (filteredData.length > 0) {
+          setFlights(filteredData);
+        } else if (data.length > 0) {
+          setFlights([data[0]]);
+        }
         // ✅ Personalized Recommendations — Task 6: log this view for the affinity profile
-        if (filteredData[0]?.to) {
-          recordInteraction("viewed", "flight", filteredData[0].to);
+        if ((filteredData[0] || data[0])?.to) {
+          recordInteraction("viewed", "flight", (filteredData[0] || data[0]).to);
         }
       } catch (error) {
         console.error("Error fetching flights:", error);

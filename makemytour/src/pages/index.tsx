@@ -1,4 +1,4 @@
-import { getflight, gethotel } from "@/api";
+import { getflight, gethotel, fallbackFlights, fallbackHotels } from "@/api";
 import Loader from "@/components/Loader";
 import { SearchSelect } from "@/components/SearchSelect";
 import Recommendations from "@/components/Recommendations";
@@ -29,10 +29,10 @@ export default function Home() {
   const [to, setto] = useState("");
   const [date, setdate] = useState("");
   const [travelers, settravelers] = useState(1);
-  const [searchresults, setsearchresult] = useState<any[]>([]);
-  const [hotel, sethotel] = useState<any[]>([]);
-  const [loading, setloading] = useState(true);
-  const [flight, setflight] = useState<any[]>([]);
+  const [searchresults, setsearchresult] = useState<any[]>(fallbackFlights);
+  const [hotel, sethotel] = useState<any[]>(fallbackHotels);
+  const [loading, setloading] = useState(false);
+  const [flight, setflight] = useState<any[]>(fallbackFlights);
   const user = useSelector((state: any) => state.user.user);
   const router = useRouter();
 
@@ -108,21 +108,30 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    let isMounted = true;
     const fetchdata = async () => {
       try {
-        const data = await gethotel();
-        sethotel(data);
-        const flightdata = await getflight();
-        setflight(flightdata);
-        setsearchresult(flightdata);
+        const [hotelData, flightData] = await Promise.all([gethotel(), getflight()]);
+        if (isMounted) {
+          if (Array.isArray(hotelData) && hotelData.length > 0) {
+            sethotel(hotelData);
+          }
+          if (Array.isArray(flightData) && flightData.length > 0) {
+            setflight(flightData);
+            setsearchresult(flightData);
+          }
+        }
       } catch (error) {
         console.error(error);
       } finally {
-        setloading(false);
+        if (isMounted) setloading(false);
       }
     };
 
     fetchdata();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const cityOptions = useMemo(() => {

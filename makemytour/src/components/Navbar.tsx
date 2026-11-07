@@ -94,9 +94,9 @@ const Navbar = () => {
               trigger={
                 <Button
                   variant="outline"
-                  className="bg-blue-600  text-white hover:bg-blue-700"
+                  className="bg-blue-600 text-white hover:bg-blue-700 font-medium"
                 >
-                  Sign Up
+                  Login / Sign Up
                 </Button>
               }
             />
